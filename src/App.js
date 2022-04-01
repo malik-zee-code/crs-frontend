@@ -6,6 +6,8 @@ import Addcar from "./MyComponents/Addcar"
 import ShowAllCars from './MyComponents/ShowAllCars';
 import MultiStepBooking from './MyComponents/booking/MultiStepBooking';
 import Login from './MyComponents/Login';
+import AddGurantor from './MyComponents/AddGurantor';
+import AddDriver from './MyComponents/AddDriver';
 function App() {
 
   return (
@@ -36,6 +38,23 @@ function App() {
               <div>
                 <Header loggedIn={true} role={"Receptionist"} />
                 <MultiStepBooking />
+              </div>
+            }
+          /> 
+          <Route exact path="/addgurantor"
+            element={
+              <div>
+                <Header loggedIn={true} role={"Receptionist"} />
+                <AddGurantor />
+              </div>
+            }
+          /> 
+
+          <Route exact path="/addDriver"
+            element={
+              <div>
+                <Header loggedIn={true} role={"Receptionist"} />
+                <AddDriver />
               </div>
             }
           /> 
