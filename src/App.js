@@ -41,7 +41,7 @@ function App() {
               </div>
             }
           /> 
-          <Route exact path="/addgurantor"
+          <Route exact path="/addGurantor"
             element={
               <div>
                 <Header loggedIn={true} role={"Receptionist"} />

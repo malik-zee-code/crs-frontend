@@ -61,7 +61,7 @@ const AddDriver = () => {
 
     const onCLick = () => {
 
-        gurantorData["company"] = 1;
+        gurantorData["company"] = 9;
         const reqoptions = {
           method : "POST",
           headers : {"Content-Type" : "application/JSON",
@@ -79,7 +79,11 @@ const AddDriver = () => {
           // setShowData(true);
           // setReturnCredentials(json["CheckIn_Details"]);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+          console.log(error);
+          alert(error);
+      });
+        
 
     }
     const { handleSubmit, formState: { errors } } = useForm();
@@ -240,7 +244,7 @@ const AddDriver = () => {
                         />
                         <br/>
                         
-                        <Button type="submit" className={classes.button} variant="contained" color="primary" onClick={onCLick} > 
+                        <Button className={classes.button} variant="contained" color="primary" onClick={onCLick} > 
                             Submit Details
                         </Button>
                     </form>
