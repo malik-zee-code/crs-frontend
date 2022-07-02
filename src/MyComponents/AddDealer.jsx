@@ -3,14 +3,14 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CarBg from "./data/background.jpeg";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import Stack from "@mui/material/Stack";
 import DatePicker from "@mui/lab/DatePicker";
-import { useState } from "react";
 import ReactjsAlert from "reactjs-alert";
 
-const AddGurantor = () => {
+const AddDealer = () => {
   const [value, setValue] = useState(new Date());
   const [value1, setValue1] = useState(new Date());
   const [value2, setValue2] = useState(new Date());
@@ -20,7 +20,7 @@ const AddGurantor = () => {
     status: false,
     title: "Please Fill All the details",
   });
-  const [gurantorData, setgurantorData] = useState({
+  const [dealerData, setdealerData] = useState({
     name: "",
     father_name: "",
     gender: "",
@@ -67,30 +67,30 @@ const AddGurantor = () => {
   const classes = useStyles();
 
   const onCLick = () => {
-    gurantorData["company"] = 1;
+    dealerData["company"] = 1;
     const reqoptions = {
       method: "POST",
       headers: {
         "Content-Type": "application/JSON",
         //  "Authorization" : 'Bearer ' + localStorage.getItem('t')
       },
-      body: JSON.stringify(gurantorData),
+      body: JSON.stringify(dealerData),
     };
-    const url = "http://localhost:3001/gurantor";
+    const url = "http://localhost:3001/dealer";
     fetch(url, reqoptions)
       .then((response) => response.json())
       .then((json) => {
         console.log(json);
-        var message = json.Status.Message;
+        var message = json.Status.message;
 
         if (message === "Success") {
           setNotification({
             type: "success",
             status: true,
-            title: "Gurantor Added Successfuly",
+            title: "Dealer Added Successfuly",
           });
 
-          setTimeout(() => (window.location = "/"), 2000);
+          setTimeout(() => (window.location = "/"), 1000);
         } else {
           setNotification({
             type: "error",
@@ -105,6 +105,7 @@ const AddGurantor = () => {
       })
       .catch((error) => {
         console.log(error);
+        // alert(error);
         setNotification({
           type: "error",
           status: true,
@@ -113,13 +114,8 @@ const AddGurantor = () => {
       });
   };
 
-  const {
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
   return (
-    <div>
+    <div style={{ height: "100vh" }}>
       <ReactjsAlert
         type={notification.type} // success, warning, error, info
         title={notification.title} // title you want to display
@@ -132,31 +128,31 @@ const AddGurantor = () => {
           backgroundSize: "auto",
         }}
       >
-        <div className={classes.addForm}>
+        <div className={classes.addForm} style={{ minHeight: "100vh" }}>
           <form className={classes.mainForm}>
-            <h1 className={classes.heading}> Add Gurantor Details</h1>
+            <h1 className={classes.heading}> Add Dealer Details</h1>
             <TextField
               id="outlined-basic"
               placeholder="Will Smith etc."
               label="Name"
               variant="filled"
               className={classes.textField}
-              value={gurantorData.name}
+              value={dealerData.name}
               onChange={(e) =>
-                setgurantorData({ ...gurantorData, name: e.target.value })
+                setdealerData({ ...dealerData, name: e.target.value })
               }
             />
             <br />
-
             <TextField
               id="outlined-basic"
+              placeholder="Will Smith etc."
               label="Father Name"
               variant="filled"
               className={classes.textField}
-              value={gurantorData.father_name}
+              value={dealerData.father_name}
               onChange={(e) =>
-                setgurantorData({
-                  ...gurantorData,
+                setdealerData({
+                  ...dealerData,
                   father_name: e.target.value,
                 })
               }
@@ -165,13 +161,27 @@ const AddGurantor = () => {
 
             <TextField
               id="outlined-basic"
+              label="CNIC"
+              variant="filled"
+              className={classes.textField}
+              value={dealerData.cnic}
+              onChange={(e) =>
+                setdealerData({
+                  ...dealerData,
+                  cnic: e.target.value,
+                })
+              }
+            />
+            <br />
+            <TextField
+              id="outlined-basic"
               label="Gender"
               placeholder="F/M/Other"
               variant="filled"
               className={classes.textField}
-              value={gurantorData.gender}
+              value={dealerData.gender}
               onChange={(e) =>
-                setgurantorData({ ...gurantorData, gender: e.target.value })
+                setdealerData({ ...dealerData, gender: e.target.value })
               }
             />
             <br />
@@ -182,39 +192,25 @@ const AddGurantor = () => {
               placeholder=""
               variant="filled"
               className={classes.textField}
-              value={gurantorData.country}
+              value={dealerData.country}
               onChange={(e) =>
-                setgurantorData({ ...gurantorData, country: e.target.value })
+                setdealerData({ ...dealerData, country: e.target.value })
               }
             />
             <br />
 
             <TextField
               id="outlined-basic"
-              label="Identity Number"
-              placeholder="xxxxxxxxxxxxx"
+              label="Phone No"
+              placeholder="03xxxxxxxx"
               variant="filled"
               className={classes.textField}
-              value={gurantorData.cnic}
+              value={dealerData.phone_no}
               onChange={(e) =>
-                setgurantorData({ ...gurantorData, cnic: e.target.value })
+                setdealerData({ ...dealerData, phone_no: e.target.value })
               }
             />
             <br />
-
-            <TextField
-              id="outlined-basic"
-              label="Phone Number"
-              placeholder="03xxxxxxxxx"
-              variant="filled"
-              className={classes.textField}
-              value={gurantorData.phone_no}
-              onChange={(e) =>
-                setgurantorData({ ...gurantorData, phone_no: e.target.value })
-              }
-            />
-            <br />
-
             <div>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <Stack spacing={1}>
@@ -227,7 +223,7 @@ const AddGurantor = () => {
                     value={value}
                     onChange={(newValue) => {
                       setValue(newValue);
-                      setgurantorData({ ...gurantorData, dob: newValue });
+                      setdealerData({ ...dealerData, dob: newValue });
                     }}
                     renderInput={(params) => <TextField {...params} />}
                   />
@@ -248,7 +244,7 @@ const AddGurantor = () => {
                     value={value1}
                     onChange={(newValue) => {
                       setValue1(newValue);
-                      setgurantorData({ ...gurantorData, doi: newValue });
+                      setdealerData({ ...dealerData, doi: newValue });
                     }}
                     renderInput={(params) => <TextField {...params} />}
                   />
@@ -268,7 +264,7 @@ const AddGurantor = () => {
                     value={value2}
                     onChange={(newValue) => {
                       setValue2(newValue);
-                      setgurantorData({ ...gurantorData, doe: newValue });
+                      setdealerData({ ...dealerData, doe: newValue });
                     }}
                     renderInput={(params) => <TextField {...params} />}
                   />
@@ -279,31 +275,30 @@ const AddGurantor = () => {
 
             <TextField
               id="outlined-basic"
-              label="Present Address"
+              label="Current Address"
               placeholder=""
               variant="filled"
               className={classes.textField}
-              value={gurantorData.per_add}
+              value={dealerData.curr_add}
               onChange={(e) =>
-                setgurantorData({ ...gurantorData, per_add: e.target.value })
+                setdealerData({ ...dealerData, curr_add: e.target.value })
               }
             />
-
+            <br />
             <TextField
               id="outlined-basic"
-              label="Permanent Address"
+              label="Present Stay"
               placeholder=""
               variant="filled"
               className={classes.textField}
-              value={gurantorData.curr_add}
+              value={dealerData.per_add}
               onChange={(e) =>
-                setgurantorData({ ...gurantorData, curr_add: e.target.value })
+                setdealerData({ ...dealerData, per_add: e.target.value })
               }
             />
             <br />
 
             <Button
-              type="submit"
               className={classes.button}
               variant="contained"
               color="primary"
@@ -318,4 +313,4 @@ const AddGurantor = () => {
   );
 };
 
-export default AddGurantor;
+export default AddDealer;
